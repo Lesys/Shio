@@ -13,12 +13,12 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import zzc.discord.shio.Bot;
 import zzc.discord.shio.Game;
+import zzc.discord.shio.commands.CommandManager;
 
 public class EventPrivateMessage extends ListenerAdapter {
-	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public void onMessageReceived(@NotNull MessageReceivedEvent event) {
-		if (!event.isFromType(ChannelType.PRIVATE) || event.getAuthor() == event.getJDA().getSelfUser()) {
+		if (!event.isFromType(ChannelType.PRIVATE) || event.getAuthor() == event.getJDA().getSelfUser() || CommandManager.waitAnswer == true) {
 			return;
 		} else {
 			User user = event.getAuthor();
@@ -44,6 +44,9 @@ public class EventPrivateMessage extends ListenerAdapter {
 					event.getMessage().addReaction(Emoji.fromUnicode("U+274C")).queue();
 				}
 			}
+			else {
+				event.getChannel().sendMessage("I am sorry, but you do not belong to any current game. Please type \"__*/registerGame*__\" in the server where the game is played to participate.").queue();
+			}
 			
 //			if (Bot.games.keySet().stream().anyMatch(game -> { return Bot.players.get(game).contains(user);})) {
 //				// Check if answer isn't already same as the one registered
@@ -57,7 +60,7 @@ public class EventPrivateMessage extends ListenerAdapter {
 //				}
 //			}
 //			else {
-//				event.getChannel().sendMessage("I am sorry, but you do not belond to any current game. Please type \"__*/registerGame*__\" in the server where the game is played to participate.").queue();
+//				event.getChannel().sendMessage("I am sorry, but you do not belong to any current game. Please type \"__*/registerGame*__\" in the server where the game is played to participate.").queue();
 //			}
 		}
 	}

@@ -5,6 +5,7 @@ import java.util.*;
 import javax.security.auth.login.LoginException;
 
 import net.dv8tion.jda.api.*;
+import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.requests.*;
 import net.dv8tion.jda.api.utils.cache.*;
@@ -23,9 +24,12 @@ public class Bot {
 		//CommandManager commandManager = new CommandManager("$");
 		//commandManager.register(new CommandAnswers());
 		
-		JDA jda = JDABuilder.create("MTIyODUyMzM5MjEwMjMwNTk0Mw.G6MGZb.S94j6ZabrfBZ1Krma3Ru0MLKsIMwaYjkW-QkZo", Arrays.asList(INTENTS))
+		//old token: MTIyODUyMzM5MjEwMjMwNTk0Mw.G6MGZb.S94j6ZabrfBZ1Krma3Ru0MLKsIMwaYjkW-QkZo
+		String jdaToken = "MTIyODUyMzM5MjEwMjMwNTk0Mw.G6MGZb.S94j6ZabrfBZ1Krma3Ru0MLKsIMwaYjkW-QkZo";
+		JDA jda = JDABuilder.create(jdaToken, Arrays.asList(INTENTS))
 				.enableCache(CacheFlag.VOICE_STATE)
 				.setStatus(OnlineStatus.ONLINE)
+				.setActivity(Activity.customStatus("Use \"/startgame\" to start a game \\o/"))
 				.addEventListeners(new EventJoin())
 				.addEventListeners(new EventKick())
 				.addEventListeners(new EventPrivateMessage())

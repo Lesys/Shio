@@ -12,7 +12,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import zzc.discord.shio.Bot;
 import zzc.discord.shio.commands.CommandManager;
 public class EventSetAnswers extends ListenerAdapter {
-	private Guild guild;
+	protected Guild guild;
 	
 	public EventSetAnswers setGuild(Guild guild) {
 		this.guild = guild;
@@ -24,7 +24,7 @@ public class EventSetAnswers extends ListenerAdapter {
 		if (!event.isFromType(ChannelType.PRIVATE) || event.getAuthor() == event.getJDA().getSelfUser()) {
 			return;
 		} else {
-			List<List<String>> answerList = manageAnswers(event.getMessage().getContentRaw());
+			List<List<String>> answerList = this.manageAnswers(event.getMessage().getContentRaw());
 			Bot.games.get(this.guild).setAnswers(answerList);
 			
 			event.getChannel().sendMessage("The answers were correctly registered ! There were " + answerList.size() + " answers registered.").queue();
@@ -34,9 +34,10 @@ public class EventSetAnswers extends ListenerAdapter {
 		}
 	}
 	
-	private List<List<String>> manageAnswers(String answers) {
-		List<List<String>> answerList = Arrays.asList(answers.split("\n")).stream().map(s -> Arrays.asList(s.split("\\$"))).toList();
+	protected List<List<String>> manageAnswers(String answers) {
+		List<List<String>> answerList = answers.lines().map(s -> Arrays.asList(s.split("\\$"))).toList();
 		
+		//answerList.get(0).forEach(c -> System.err.println("Code " + c + ": " + (int)c.charAt(0)));
 		//AtomicInteger i = new AtomicInteger(1);
 		
 		//answerList.forEach(answer -> System.out.println("Answer " + i.getAndIncrement() + ": " + answer.get(0) + (answer.size() > 1 ? "(" + answer.subList(1, answer.size()).toString() + ")" : "")));

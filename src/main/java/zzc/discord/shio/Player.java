@@ -1,16 +1,20 @@
 package zzc.discord.shio;
 
+import java.util.*;
+
 import net.dv8tion.jda.api.entities.User;
 
 public class Player {
-	private User user;
-	private int points;
-	private String currentAnswer;
+	protected User user;
+	protected int points;
+	protected String currentAnswer;
+	protected List<String> allAnswers;
 	
 	public Player(User user) {
 		this.user = user;
 		this.points = 0;
 		this.currentAnswer = "";
+		this.allAnswers = new ArrayList<String>();
 	}
 	
 	public User getUser() {
@@ -25,7 +29,12 @@ public class Player {
 		return this.currentAnswer;
 	}
 	
+	public List<String> getAllAnswers() {
+		return this.allAnswers;
+	}
+	
 	public void resetAnswer() {
+		this.allAnswers.add(this.currentAnswer);
 		this.currentAnswer = "";
 	}
 	

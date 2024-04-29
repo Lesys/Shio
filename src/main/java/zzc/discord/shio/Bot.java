@@ -15,7 +15,7 @@ import zzc.discord.shio.commands.CommandManager;
 import zzc.discord.shio.events.EventJoin;
 
 public class Bot {
-	public static GatewayIntent[] INTENTS = {GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES};
+	public static GatewayIntent[] INTENTS = {GatewayIntent.DIRECT_MESSAGES, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.GUILD_VOICE_STATES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_PRESENCES};
 	//public static Map<User, String> answers = new HashMap<User, String>(); //<UserID, Answer>
 	public static Map<Guild, Game> games = new HashMap<Guild, Game>(); //<Guild, Game>
 
@@ -25,7 +25,7 @@ public class Bot {
 		//commandManager.register(new CommandAnswers());
 		
 		//old token: MTIyODUyMzM5MjEwMjMwNTk0Mw.G6MGZb.S94j6ZabrfBZ1Krma3Ru0MLKsIMwaYjkW-QkZo
-		String jdaToken = "MTIyODUyMzM5MjEwMjMwNTk0Mw.G6MGZb.S94j6ZabrfBZ1Krma3Ru0MLKsIMwaYjkW-QkZo";
+		String jdaToken = JDAToken.jdaToken;
 		JDA jda = JDABuilder.create(jdaToken, Arrays.asList(INTENTS))
 				.enableCache(CacheFlag.VOICE_STATE)
 				.setStatus(OnlineStatus.ONLINE)

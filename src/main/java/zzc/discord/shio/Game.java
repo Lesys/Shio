@@ -44,8 +44,13 @@ public class Game {
 	}
 	
 	public void addPlayer(User user) {
-		if (!this.alreadyRegistered(user))
-			this.players.add(new Player(user));
+		if (!this.alreadyRegistered(user)) {
+			Player player = new Player(user);
+			this.players.add(player);
+			
+			for (int i = 0; i < this.answerPosition; i++)
+				player.resetAnswer();
+		}
 	}
 	
 	public Player getPlayer(User user) {
@@ -61,6 +66,14 @@ public class Game {
 	
 	public List<String> getAnswer() throws IndexOutOfBoundsException {
 		return this.answers.get(this.answerPosition);
+	}
+	
+	public List<String> getAnswer(int answerPosition) {
+		try {
+			return answerPosition < this.answerPosition || this.answerPosition + 1 >= this.answers.size() ? this.answers.get(answerPosition) : Arrays.asList("");
+		} catch (IndexOutOfBoundsException e) {
+			return Arrays.asList("");
+		}
 	}
 	
 	public void setAnswers(List<List<String>> answers) {
@@ -82,7 +95,7 @@ public class Game {
     		builder.append(this.getPlayers().stream().map(player-> player.getUser().getAsMention() + " - " + player.getPoints()).toList().toString());
 
 			this.channel.sendMessage("The answer n°" + (this.answerPosition + 1) + " was the last one. Game is over !\nHere are the results: \n" + builder.toString()).queue();
-			Bot.games.remove(this.guild);
+			//Bot.games.remove(this.guild);
 		} else {
 			this.answerPosition++;
 		}
